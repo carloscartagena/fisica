@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Práctica 3 - Dinámica Lineal (Soluciones)</title>
+<style>
+  :root{
+    --azul:#1b3a6b; --azul2:#2e5fa3; --gris:#444; --suave:#f4f7fb;
+    --borde:#d7e0ec; --verde:#1e7a46; --rojo:#c0392b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:"Segoe UI",Arial,Helvetica,sans-serif;
+    color:#222; line-height:1.5; margin:0; background:#eef2f7;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:24px 18px 60px;}
+  header.main{
+    background:linear-gradient(135deg,var(--azul),var(--azul2));
+    color:#fff; border-radius:14px; padding:26px 28px; margin-bottom:26px;
+    box-shadow:0 6px 18px rgba(27,58,107,.25);
+  }
+  header.main h1{margin:0 0 6px; font-size:26px; letter-spacing:.5px;}
+  header.main p{margin:0; opacity:.92; font-size:15px;}
+  .nota{
+    background:#fff7e6; border:1px solid #f0d49a; color:#7a5a12;
+    padding:10px 14px; border-radius:8px; font-size:14px; margin-bottom:24px;
+  }
+  .card{
+    background:#fff; border:1px solid var(--borde); border-radius:12px;
+    padding:18px 20px; margin-bottom:22px; box-shadow:0 2px 8px rgba(30,60,110,.06);
+  }
+  .card h2{
+    margin:0 0 4px; font-size:18px; color:var(--azul);
+    display:flex; align-items:center; gap:10px;
+  }
+  .num{
+    background:var(--azul); color:#fff; width:30px; height:30px; flex:none;
+    border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+    font-size:15px; font-weight:700;
+  }
+  .enun{color:var(--gris); font-size:14.5px; margin:6px 0 14px;}
+  .grid{display:flex; flex-wrap:wrap; gap:18px; align-items:flex-start;}
+  .fig{
+    flex:0 0 auto; background:var(--suave); border:1px solid var(--borde);
+    border-radius:10px; padding:10px;
+  }
+  .sol{flex:1 1 300px; min-width:260px;}
+  .sol .paso{margin:3px 0; font-size:14.5px;}
+  .form{
+    font-family:"Cambria Math","Times New Roman",serif; font-size:15.5px;
+    background:#f7f9fc; border-left:3px solid var(--azul2); padding:6px 12px;
+    border-radius:0 6px 6px 0; margin:7px 0; display:block;
+  }
+  .res{
+    margin-top:10px; background:#e8f6ee; border:1px solid #b6e3c8;
+    color:var(--verde); font-weight:700; padding:8px 12px; border-radius:8px;
+    font-size:15px;
+  }
+  .datos{font-size:13.5px; color:#555; margin-bottom:8px;}
+  .datos b{color:#222;}
+  svg{display:block;}
+  text{font-family:"Segoe UI",Arial,sans-serif;}
+  footer{text-align:center; color:#7a8aa0; font-size:13px; margin-top:30px;}
+  @media print{
+    body{background:#fff;}
+    .card{break-inside:avoid; box-shadow:none;}
+    header.main{box-shadow:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="main">
+  <h1>Práctica 3 — Dinámica Lineal</h1>
+  <p>Soluciones con diagramas de cuerpo libre · Segunda Ley de Newton (ΣF = m·a) · g = 10 m/s²</p>
+</header>
+
+<div class="nota">
+  <b>Convención:</b> se toma g = 10 m/s², sen 37° = 0,6 ; cos 37° = 0,8 ; sen 30° = 0,5 ; cos 60° = 0,5.
+  En sistemas de varios bloques se aplica ΣF = m·a a todo el conjunto y luego a cada bloque para hallar tensiones/contactos.
+</div>
+
+<!-- ============ 1 ============ -->
+<div class="card">
+  <h2><span class="num">1</span> Fuerza resultante</h2>
+  <p class="enun">Un cuerpo de 30 kg tiene una aceleración de 6 m/s². ¿Qué fuerza resultante actúa sobre el cuerpo?</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="240" height="120" viewBox="0 0 240 120">
+        <rect x="60" y="45" width="60" height="45" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="90" y="73" font-size="14" text-anchor="middle" font-weight="700">m</text>
+        <line x1="120" y1="67" x2="205" y2="67" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="205,67 193,61 193,73" fill="#c0392b"/>
+        <text x="170" y="56" font-size="13" fill="#c0392b" font-weight="700">F</text>
+        <text x="150" y="105" font-size="12" fill="#444">a = 6 m/s²</text>
+        <text x="55" y="35" font-size="12" fill="#444">m = 30 kg</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="form">F = m · a</div>
+      <div class="form">F = 30 kg × 6 m/s²</div>
+      <div class="res">F = 180 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 2 ============ -->
+<div class="card">
+  <h2><span class="num">2</span> Fuerza a partir del cambio de velocidad</h2>
+  <p class="enun">Un cuerpo de 5 kg varía su velocidad de 2 m/s a 14 m/s en 3 s. Hallar la fuerza resultante.</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="240" height="120" viewBox="0 0 240 120">
+        <rect x="30" y="50" width="45" height="35" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <line x1="75" y1="67" x2="110" y2="67" stroke="#2e5fa3" stroke-width="3"/>
+        <polygon points="110,67 100,62 100,72" fill="#2e5fa3"/>
+        <text x="40" y="100" font-size="11" fill="#444">v₀ = 2 m/s</text>
+        <rect x="150" y="50" width="45" height="35" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <line x1="195" y1="67" x2="235" y2="67" stroke="#c0392b" stroke-width="4"/>
+        <polygon points="235,67 223,61 223,73" fill="#c0392b"/>
+        <text x="158" y="100" font-size="11" fill="#444">vf = 14 m/s</text>
+        <text x="100" y="25" font-size="11" fill="#444">t = 3 s</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="form">a = (vf − v₀) / t = (14 − 2)/3 = 4 m/s²</div>
+      <div class="form">F = m · a = 5 × 4</div>
+      <div class="res">F = 20 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 3 ============ -->
+<div class="card">
+  <h2><span class="num">3</span> Aceleración de dos bloques unidos</h2>
+  <p class="enun">Hallar la aceleración de los bloques. m_A = 10 kg ; m_B = 30 kg. F = 36 N (←) y F = 56 N (→).</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="320" height="120" viewBox="0 0 320 120">
+        <line x1="10" y1="95" x2="310" y2="95" stroke="#777" stroke-width="2"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="20" y1="95" x2="12" y2="105"/><line x1="50" y1="95" x2="42" y2="105"/>
+          <line x1="80" y1="95" x2="72" y2="105"/><line x1="110" y1="95" x2="102" y2="105"/>
+          <line x1="140" y1="95" x2="132" y2="105"/><line x1="170" y1="95" x2="162" y2="105"/>
+          <line x1="200" y1="95" x2="192" y2="105"/><line x1="230" y1="95" x2="222" y2="105"/>
+          <line x1="260" y1="95" x2="252" y2="105"/><line x1="290" y1="95" x2="282" y2="105"/>
+        </g>
+        <rect x="70" y="55" width="50" height="40" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="95" y="80" font-size="14" text-anchor="middle" font-weight="700">A</text>
+        <rect x="200" y="55" width="50" height="40" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="225" y="80" font-size="14" text-anchor="middle" font-weight="700">B</text>
+        <line x1="120" y1="75" x2="200" y2="75" stroke="#333" stroke-width="2"/>
+        <line x1="70" y1="75" x2="20" y2="75" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="20,75 32,69 32,81" fill="#c0392b"/>
+        <text x="22" y="48" font-size="12" fill="#c0392b" font-weight="700">36 N</text>
+        <line x1="250" y1="75" x2="305" y2="75" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="305,75 293,69 293,81" fill="#c0392b"/>
+        <text x="262" y="48" font-size="12" fill="#c0392b" font-weight="700">56 N</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="form">F_neta = 56 − 36 = 20 N (→)</div>
+      <div class="form">a = F_neta / (m_A + m_B) = 20 / 40</div>
+      <div class="res">a = 0,5 m/s² (hacia la derecha)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 4 ============ -->
+<div class="card">
+  <h2><span class="num">4</span> Tensión de la cuerda</h2>
+  <p class="enun">Hallar la tensión de la cuerda que une los bloques. m_A = 9 kg ; m_B = 11 kg. 40 N (←) y 120 N (→).</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="320" height="130" viewBox="0 0 320 130">
+        <line x1="10" y1="95" x2="310" y2="95" stroke="#777" stroke-width="2"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="20" y1="95" x2="12" y2="105"/><line x1="60" y1="95" x2="52" y2="105"/>
+          <line x1="100" y1="95" x2="92" y2="105"/><line x1="140" y1="95" x2="132" y2="105"/>
+          <line x1="180" y1="95" x2="172" y2="105"/><line x1="220" y1="95" x2="212" y2="105"/>
+          <line x1="260" y1="95" x2="252" y2="105"/><line x1="300" y1="95" x2="292" y2="105"/>
+        </g>
+        <rect x="70" y="55" width="50" height="40" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="95" y="80" font-size="14" text-anchor="middle" font-weight="700">A</text>
+        <rect x="200" y="55" width="50" height="40" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="225" y="80" font-size="14" text-anchor="middle" font-weight="700">B</text>
+        <line x1="120" y1="75" x2="200" y2="75" stroke="#1e7a46" stroke-width="2"/>
+        <text x="150" y="68" font-size="11" fill="#1e7a46" font-weight="700">T</text>
+        <line x1="70" y1="75" x2="20" y2="75" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="20,75 32,69 32,81" fill="#c0392b"/>
+        <text x="20" y="48" font-size="12" fill="#c0392b" font-weight="700">40 N</text>
+        <line x1="250" y1="75" x2="305" y2="75" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="305,75 293,69 293,81" fill="#c0392b"/>
+        <text x="258" y="48" font-size="12" fill="#c0392b" font-weight="700">120 N</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="form">a = (120 − 40)/(9 + 11) = 80/20 = 4 m/s²</div>
+      <div class="paso">Bloque A: T − 40 = m_A · a</div>
+      <div class="form">T = 40 + 9 × 4 = 40 + 36</div>
+      <div class="res">a = 4 m/s² ; T = 76 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 5 ============ -->
+<div class="card">
+  <h2><span class="num">5</span> Máquina de Atwood</h2>
+  <p class="enun">Calcular la aceleración de los bloques. m_A = 14 kg ; m_B = 6 kg (polea fija).</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="200" height="190" viewBox="0 0 200 190">
+        <rect x="40" y="8" width="120" height="10" fill="#9aa6b5"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="48" y1="8" x2="40" y2="0"/><line x1="68" y1="8" x2="60" y2="0"/>
+          <line x1="88" y1="8" x2="80" y2="0"/><line x1="108" y1="8" x2="100" y2="0"/>
+          <line x1="128" y1="8" x2="120" y2="0"/><line x1="148" y1="8" x2="140" y2="0"/>
+        </g>
+        <circle cx="100" cy="40" r="18" fill="#fff" stroke="#444" stroke-width="2.5"/>
+        <circle cx="100" cy="40" r="3" fill="#444"/>
+        <line x1="100" y1="22" x2="100" y2="18" stroke="#444" stroke-width="2"/>
+        <line x1="82" y1="40" x2="82" y2="120" stroke="#333" stroke-width="2"/>
+        <line x1="118" y1="40" x2="118" y2="80" stroke="#333" stroke-width="2"/>
+        <rect x="64" y="120" width="36" height="34" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="82" y="142" font-size="13" text-anchor="middle" font-weight="700">A</text>
+        <rect x="100" y="80" width="36" height="32" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="118" y="101" font-size="13" text-anchor="middle" font-weight="700">B</text>
+        <text x="40" y="178" font-size="11" fill="#444">A = 14 kg</text>
+        <text x="120" y="178" font-size="11" fill="#444">B = 6 kg</text>
+        <line x1="82" y1="160" x2="82" y2="172" stroke="#c0392b" stroke-width="2"/>
+        <polygon points="82,172 78,164 86,164" fill="#c0392b"/>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="paso">A (baja): m_A·g − T = m_A·a &nbsp;|&nbsp; B (sube): T − m_B·g = m_B·a</div>
+      <div class="form">a = (m_A − m_B)·g / (m_A + m_B)</div>
+      <div class="form">a = (14 − 6)·10 / (14 + 6) = 80 / 20</div>
+      <div class="res">a = 4 m/s²</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 6 ============ -->
+<div class="card">
+  <h2><span class="num">6</span> Atwood: aceleración y tensión</h2>
+  <p class="enun">Hallar la aceleración de los bloques y la tensión de la cuerda. m_A = 6 kg ; m_B = 4 kg.</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="200" height="190" viewBox="0 0 200 190">
+        <rect x="40" y="8" width="120" height="10" fill="#9aa6b5"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="48" y1="8" x2="40" y2="0"/><line x1="68" y1="8" x2="60" y2="0"/>
+          <line x1="88" y1="8" x2="80" y2="0"/><line x1="108" y1="8" x2="100" y2="0"/>
+          <line x1="128" y1="8" x2="120" y2="0"/><line x1="148" y1="8" x2="140" y2="0"/>
+        </g>
+        <circle cx="100" cy="40" r="18" fill="#fff" stroke="#444" stroke-width="2.5"/>
+        <circle cx="100" cy="40" r="3" fill="#444"/>
+        <line x1="100" y1="22" x2="100" y2="18" stroke="#444" stroke-width="2"/>
+        <line x1="82" y1="40" x2="82" y2="120" stroke="#1e7a46" stroke-width="2"/>
+        <line x1="118" y1="40" x2="118" y2="80" stroke="#1e7a46" stroke-width="2"/>
+        <text x="60" y="95" font-size="11" fill="#1e7a46" font-weight="700">T</text>
+        <rect x="64" y="120" width="36" height="34" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="82" y="142" font-size="13" text-anchor="middle" font-weight="700">A</text>
+        <rect x="100" y="80" width="36" height="32" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="118" y="101" font-size="13" text-anchor="middle" font-weight="700">B</text>
+        <text x="42" y="178" font-size="11" fill="#444">A = 6 kg</text>
+        <text x="122" y="178" font-size="11" fill="#444">B = 4 kg</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="form">a = (m_A − m_B)·g / (m_A + m_B) = (6 − 4)·10 / 10 = 2 m/s²</div>
+      <div class="paso">Para B (sube): T − m_B·g = m_B·a</div>
+      <div class="form">T = m_B (g + a) = 4 (10 + 2)</div>
+      <div class="res">a = 2 m/s² ; T = 48 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 7 ============ -->
+<div class="card">
+  <h2><span class="num">7</span> Cuatro bloques en fila</h2>
+  <p class="enun">Calcular la aceleración. Sin rozamiento. m_A = m_B = m_C = m_D = 4 kg. F = 48 N sobre D.</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="360" height="110" viewBox="0 0 360 110">
+        <line x1="5" y1="85" x2="355" y2="85" stroke="#777" stroke-width="2"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="20" y1="85" x2="12" y2="95"/><line x1="60" y1="85" x2="52" y2="95"/>
+          <line x1="100" y1="85" x2="92" y2="95"/><line x1="140" y1="85" x2="132" y2="95"/>
+          <line x1="180" y1="85" x2="172" y2="95"/><line x1="220" y1="85" x2="212" y2="95"/>
+          <line x1="260" y1="85" x2="252" y2="95"/><line x1="300" y1="85" x2="292" y2="95"/>
+          <line x1="340" y1="85" x2="332" y2="95"/>
+        </g>
+        <g font-size="13" text-anchor="middle" font-weight="700">
+          <rect x="25" y="50" width="40" height="35" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/><text x="45" y="73">A</text>
+          <rect x="105" y="50" width="40" height="35" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/><text x="125" y="73">B</text>
+          <rect x="185" y="50" width="40" height="35" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/><text x="205" y="73">C</text>
+          <rect x="265" y="50" width="40" height="35" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/><text x="285" y="73">D</text>
+        </g>
+        <line x1="65" y1="67" x2="105" y2="67" stroke="#333" stroke-width="2"/>
+        <line x1="145" y1="67" x2="185" y2="67" stroke="#333" stroke-width="2"/>
+        <line x1="225" y1="67" x2="265" y2="67" stroke="#333" stroke-width="2"/>
+        <line x1="305" y1="67" x2="350" y2="67" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="350,67 338,61 338,73" fill="#c0392b"/>
+        <text x="315" y="42" font-size="12" fill="#c0392b" font-weight="700">48 N</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="form">m_total = 4 × 4 = 16 kg</div>
+      <div class="form">a = F / m_total = 48 / 16</div>
+      <div class="res">a = 3 m/s²</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 8 ============ -->
+<div class="card">
+  <h2><span class="num">8</span> Bloque sobre superficie horizontal + bloque colgando</h2>
+  <p class="enun">Hallar la aceleración y la tensión. Sin rozamiento. m_A = 4 kg ; m_B = 6 kg.</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="240" height="170" viewBox="0 0 240 170">
+        <!-- mesa / soporte -->
+        <line x1="40" y1="40" x2="210" y2="40" stroke="#444" stroke-width="2"/>
+        <polygon points="40,40 210,40 210,150 40,150" fill="#eef2f7"/>
+        <g stroke="#b9c4d4" stroke-width="1">
+          <line x1="55" y1="50" x2="200" y2="50"/><line x1="55" y1="70" x2="200" y2="70"/>
+          <line x1="55" y1="90" x2="200" y2="90"/><line x1="55" y1="110" x2="200" y2="110"/>
+          <line x1="55" y1="130" x2="200" y2="130"/>
+        </g>
+        <rect x="140" y="18" width="44" height="22" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="162" y="34" font-size="12" text-anchor="middle" font-weight="700">A</text>
+        <!-- polea -->
+        <circle cx="40" cy="40" r="9" fill="#fff" stroke="#444" stroke-width="2"/>
+        <!-- cuerdas -->
+        <line x1="140" y1="29" x2="40" y2="29" stroke="#1e7a46" stroke-width="2"/>
+        <line x1="40" y1="29" x2="40" y2="29"/>
+        <line x1="31" y1="40" x2="31" y2="120" stroke="#1e7a46" stroke-width="2"/>
+        <rect x="13" y="120" width="36" height="34" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="31" y="142" font-size="12" text-anchor="middle" font-weight="700">B</text>
+        <text x="80" y="24" font-size="10" fill="#1e7a46" font-weight="700">T</text>
+        <line x1="31" y1="158" x2="31" y2="168" stroke="#c0392b" stroke-width="2"/>
+        <polygon points="31,168 27,160 35,160" fill="#c0392b"/>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="paso">A (horizontal): T = m_A·a &nbsp;|&nbsp; B (cae): m_B·g − T = m_B·a</div>
+      <div class="form">a = m_B·g / (m_A + m_B) = 60 / 10 = 6 m/s²</div>
+      <div class="form">T = m_A·a = 4 × 6</div>
+      <div class="res">a = 6 m/s² ; T = 24 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 9 ============ -->
+<div class="card">
+  <h2><span class="num">9</span> Cuña: A cuelga, B sobre plano inclinado 30°</h2>
+  <p class="enun">Calcular la aceleración del sistema. m_A = 8 kg ; m_B = 8 kg ; θ = 30°.</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="280" height="170" viewBox="0 0 280 170">
+        <!-- cuña: lado izq vertical, derecho inclinado 30 -->
+        <polygon points="60,30 60,150 250,150" fill="#eef2f7" stroke="#444" stroke-width="2"/>
+        <g stroke="#b9c4d4" stroke-width="1">
+          <line x1="80" y1="150" x2="90" y2="140"/><line x1="120" y1="150" x2="135" y2="135"/>
+          <line x1="160" y1="150" x2="180" y2="130"/><line x1="200" y1="150" x2="222" y2="128"/>
+        </g>
+        <!-- polea arriba -->
+        <circle cx="60" cy="30" r="10" fill="#fff" stroke="#444" stroke-width="2"/>
+        <!-- A cuelga a la izquierda -->
+        <line x1="48" y1="30" x2="48" y2="80" stroke="#1e7a46" stroke-width="2"/>
+        <rect x="30" y="80" width="36" height="34" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="48" y="102" font-size="12" text-anchor="middle" font-weight="700">A</text>
+        <!-- B sobre la rampa -->
+        <line x1="68" y1="33" x2="150" y2="118" stroke="#1e7a46" stroke-width="2"/>
+        <g transform="translate(165,118) rotate(30)">
+          <rect x="-18" y="-30" width="40" height="30" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+          <text x="2" y="-9" font-size="12" text-anchor="middle" font-weight="700">B</text>
+        </g>
+        <text x="205" y="146" font-size="11">θ=30°</text>
+        <path d="M225,150 A25,25 0 0 0 213,131" fill="none" stroke="#c0392b" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="paso">A baja porque m_A·g (80 N) &gt; m_B·g·senθ (40 N)</div>
+      <div class="paso">A: m_A·g − T = m_A·a &nbsp;|&nbsp; B: T − m_B·g·senθ = m_B·a</div>
+      <div class="form">a = (m_A·g − m_B·g·sen30°) / (m_A + m_B)</div>
+      <div class="form">a = (80 − 40) / 16 = 40 / 16</div>
+      <div class="res">a = 2,5 m/s²</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 10 ============ -->
+<div class="card">
+  <h2><span class="num">10</span> Fuerza de contacto entre bloques</h2>
+  <p class="enun">Determinar la fuerza de contacto entre los bloques. Sin rozamiento. m_A = 6 kg ; m_B = 4 kg. 24 N (→) sobre B y 14 N (←) sobre A.</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="320" height="125" viewBox="0 0 320 125">
+        <line x1="10" y1="100" x2="310" y2="100" stroke="#777" stroke-width="2"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="25" y1="100" x2="17" y2="110"/><line x1="65" y1="100" x2="57" y2="110"/>
+          <line x1="105" y1="100" x2="97" y2="110"/><line x1="145" y1="100" x2="137" y2="110"/>
+          <line x1="185" y1="100" x2="177" y2="110"/><line x1="225" y1="100" x2="217" y2="110"/>
+          <line x1="265" y1="100" x2="257" y2="110"/><line x1="305" y1="100" x2="297" y2="110"/>
+        </g>
+        <rect x="110" y="62" width="45" height="38" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="132" y="86" font-size="13" text-anchor="middle" font-weight="700">B</text>
+        <rect x="155" y="48" width="55" height="52" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="182" y="78" font-size="13" text-anchor="middle" font-weight="700">A</text>
+        <line x1="110" y1="80" x2="60" y2="80" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="110,80 98,74 98,86" fill="#c0392b"/>
+        <text x="62" y="56" font-size="12" fill="#c0392b" font-weight="700">24 N</text>
+        <line x1="210" y1="74" x2="265" y2="74" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="210,74 222,68 222,80" fill="#c0392b"/>
+        <text x="225" y="52" font-size="12" fill="#c0392b" font-weight="700">14 N</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="form">a = (24 − 14)/(6 + 4) = 10/10 = 1 m/s² (→)</div>
+      <div class="paso">Bloque B: 24 − N = m_B·a</div>
+      <div class="form">N = 24 − 4 × 1 = 24 − 4</div>
+      <div class="res">a = 1 m/s² ; Fuerza de contacto N = 20 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 11 ============ -->
+<div class="card">
+  <h2><span class="num">11</span> Sistema con polea: tres masas</h2>
+  <p class="enun">Determinar la aceleración de las masas y las tensiones en las cuerdas. B = 6 kg y A = 6 kg de un lado; C = 8 kg del otro.</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="220" height="210" viewBox="0 0 220 210">
+        <rect x="50" y="8" width="120" height="10" fill="#9aa6b5"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="58" y1="8" x2="50" y2="0"/><line x1="78" y1="8" x2="70" y2="0"/>
+          <line x1="98" y1="8" x2="90" y2="0"/><line x1="118" y1="8" x2="110" y2="0"/>
+          <line x1="138" y1="8" x2="130" y2="0"/><line x1="158" y1="8" x2="150" y2="0"/>
+        </g>
+        <circle cx="110" cy="40" r="18" fill="#fff" stroke="#444" stroke-width="2.5"/>
+        <circle cx="110" cy="40" r="3" fill="#444"/>
+        <line x1="110" y1="22" x2="110" y2="18" stroke="#444" stroke-width="2"/>
+        <!-- lado derecho B arriba, A abajo -->
+        <line x1="128" y1="40" x2="128" y2="60" stroke="#c0392b" stroke-width="2"/>
+        <rect x="110" y="60" width="36" height="32" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="128" y="81" font-size="12" text-anchor="middle" font-weight="700">B</text>
+        <line x1="128" y1="92" x2="128" y2="112" stroke="#1e7a46" stroke-width="2"/>
+        <rect x="110" y="112" width="36" height="32" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="128" y="133" font-size="12" text-anchor="middle" font-weight="700">A</text>
+        <text x="150" y="78" font-size="10" fill="#c0392b" font-weight="700">T₁</text>
+        <text x="150" y="110" font-size="10" fill="#1e7a46" font-weight="700">T₂</text>
+        <!-- lado izquierdo C -->
+        <line x1="92" y1="40" x2="92" y2="135" stroke="#c0392b" stroke-width="2"/>
+        <rect x="74" y="135" width="36" height="34" fill="#9fc4ef" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="92" y="157" font-size="12" text-anchor="middle" font-weight="700">C</text>
+        <text x="20" y="200" font-size="11" fill="#444">B = A = 6 kg ; C = 8 kg</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="paso">Lado (A+B) = 12 kg baja ; C = 8 kg sube.</div>
+      <div class="form">a = (12 − 8)·g / (12 + 8) = 40 / 20 = 2 m/s²</div>
+      <div class="paso">Cuerda principal (C sube): T₁ = m_C(g + a) = 8(12) = 96 N</div>
+      <div class="paso">Cuerda A–B (A baja): m_A·g − T₂ = m_A·a → T₂ = 60 − 12</div>
+      <div class="res">a = 2 m/s² ; T₁ = 96 N ; T₂ = 48 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 12 ============ -->
+<div class="card">
+  <h2><span class="num">12</span> Reacción de contacto entre m_B y m_C</h2>
+  <p class="enun">Superficies totalmente lisas. Determinar la fuerza de reacción entre m_B y m_C. m_A = 4 kg ; m_B = 6 kg ; m_C = 10 kg. 80 N (→) sobre A y 200 N (←) sobre C.</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="340" height="125" viewBox="0 0 340 125">
+        <line x1="10" y1="100" x2="330" y2="100" stroke="#777" stroke-width="2"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="25" y1="100" x2="17" y2="110"/><line x1="65" y1="100" x2="57" y2="110"/>
+          <line x1="105" y1="100" x2="97" y2="110"/><line x1="145" y1="100" x2="137" y2="110"/>
+          <line x1="185" y1="100" x2="177" y2="110"/><line x1="225" y1="100" x2="217" y2="110"/>
+          <line x1="265" y1="100" x2="257" y2="110"/><line x1="305" y1="100" x2="297" y2="110"/>
+        </g>
+        <rect x="95" y="68" width="42" height="32" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="116" y="89" font-size="13" text-anchor="middle" font-weight="700">A</text>
+        <rect x="137" y="58" width="46" height="42" fill="#aecbf0" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="160" y="84" font-size="13" text-anchor="middle" font-weight="700">B</text>
+        <rect x="183" y="44" width="56" height="56" fill="#9fc4ef" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="211" y="76" font-size="13" text-anchor="middle" font-weight="700">C</text>
+        <line x1="95" y1="84" x2="45" y2="84" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="95,84 83,78 83,90" fill="#c0392b"/>
+        <text x="46" y="62" font-size="12" fill="#c0392b" font-weight="700">80 N</text>
+        <line x1="239" y1="70" x2="300" y2="70" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="239,70 251,64 251,76" fill="#c0392b"/>
+        <text x="255" y="50" font-size="12" fill="#c0392b" font-weight="700">200 N</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="form">a = (200 − 80)/(4 + 6 + 10) = 120/20 = 6 m/s² (←)</div>
+      <div class="paso">Bloque C: 200 − N = m_C·a</div>
+      <div class="form">N = 200 − 10 × 6 = 200 − 60</div>
+      <div class="res">a = 6 m/s² ; Reacción m_B–m_C = 140 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 13 ============ -->
+<div class="card">
+  <h2><span class="num">13</span> Persona saltando sobre una balanza</h2>
+  <p class="enun">Cesitar (50 kg) salta hacia arriba. La balanza marca 1100 N en el impulso. ¿Cuál es su máxima aceleración?</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="180" height="180" viewBox="0 0 180 180">
+        <!-- persona simple -->
+        <circle cx="90" cy="40" r="14" fill="#ffe0b2" stroke="#a06a2c" stroke-width="2"/>
+        <line x1="90" y1="54" x2="90" y2="95" stroke="#2e5fa3" stroke-width="6"/>
+        <line x1="90" y1="62" x2="68" y2="82" stroke="#2e5fa3" stroke-width="5"/>
+        <line x1="90" y1="62" x2="112" y2="82" stroke="#2e5fa3" stroke-width="5"/>
+        <line x1="90" y1="95" x2="74" y2="125" stroke="#444" stroke-width="5"/>
+        <line x1="90" y1="95" x2="106" y2="125" stroke="#444" stroke-width="5"/>
+        <!-- balanza -->
+        <rect x="50" y="128" width="80" height="22" rx="4" fill="#cfd8e3" stroke="#5b6b80" stroke-width="2"/>
+        <text x="90" y="143" font-size="11" text-anchor="middle" font-weight="700">1100 N</text>
+        <line x1="40" y1="150" x2="140" y2="150" stroke="#777" stroke-width="2"/>
+        <!-- fuerzas -->
+        <line x1="150" y1="120" x2="150" y2="90" stroke="#1e7a46" stroke-width="3"/>
+        <polygon points="150,90 145,100 155,100" fill="#1e7a46"/>
+        <text x="156" y="108" font-size="11" fill="#1e7a46" font-weight="700">N</text>
+        <line x1="30" y1="90" x2="30" y2="120" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="30,120 25,110 35,110" fill="#c0392b"/>
+        <text x="6" y="105" font-size="11" fill="#c0392b" font-weight="700">mg</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="paso">2ª Ley (vertical, hacia arriba +): N − m·g = m·a</div>
+      <div class="form">1100 − (50 × 10) = 50 · a</div>
+      <div class="form">1100 − 500 = 50 · a → 600 = 50 · a</div>
+      <div class="res">a = 12 m/s² (hacia arriba)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 14 ============ -->
+<div class="card">
+  <h2><span class="num">14</span> Fuerza F inclinada</h2>
+  <p class="enun">El bloque de 10 kg se desplaza hacia la izquierda con a = 0,4 m/s². θ = 60°. Una fuerza de 20 N actúa horizontal (→). Calcular F. (Superficie lisa)</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="260" height="150" viewBox="0 0 260 150">
+        <line x1="10" y1="110" x2="250" y2="110" stroke="#777" stroke-width="2"/>
+        <g stroke="#777" stroke-width="1">
+          <line x1="25" y1="110" x2="17" y2="120"/><line x1="65" y1="110" x2="57" y2="120"/>
+          <line x1="105" y1="110" x2="97" y2="120"/><line x1="145" y1="110" x2="137" y2="120"/>
+          <line x1="185" y1="110" x2="177" y2="120"/><line x1="225" y1="110" x2="217" y2="120"/>
+        </g>
+        <rect x="105" y="72" width="55" height="38" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        <text x="132" y="96" font-size="12" text-anchor="middle" font-weight="700">10 kg</text>
+        <!-- F a 60° arriba-izquierda desde esquina inf izq del bloque -->
+        <line x1="105" y1="110" x2="55" y2="23" stroke="#c0392b" stroke-width="3"/>
+        <polygon points="55,23 62,38 50,40" fill="#c0392b"/>
+        <text x="40" y="20" font-size="13" fill="#c0392b" font-weight="700">F</text>
+        <path d="M135,110 A30,30 0 0 1 120,84" fill="none" stroke="#444" stroke-width="1.3"/>
+        <text x="138" y="100" font-size="11">θ</text>
+        <!-- 20 N derecha -->
+        <line x1="160" y1="91" x2="215" y2="91" stroke="#1e7a46" stroke-width="3"/>
+        <polygon points="215,91 203,85 203,97" fill="#1e7a46"/>
+        <text x="172" y="80" font-size="12" fill="#1e7a46" font-weight="700">20 N</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="paso">Eje horizontal (← positivo): F·cosθ − 20 = m·a</div>
+      <div class="form">F·cos60° − 20 = 10 × 0,4</div>
+      <div class="form">0,5·F − 20 = 4 → 0,5·F = 24</div>
+      <div class="res">F = 48 N</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 15 ============ -->
+<div class="card">
+  <h2><span class="num">15</span> Bloque en plano inclinado liso</h2>
+  <p class="enun">Un bloque se suelta en una superficie inclinada lisa que forma 37° con la horizontal. Calcular la aceleración. (g = 10 m/s²)</p>
+  <div class="grid">
+    <div class="fig">
+      <svg width="260" height="170" viewBox="0 0 260 170">
+        <polygon points="30,150 240,150 240,30" fill="#eef2f7" stroke="#444" stroke-width="2"/>
+        <g stroke="#b9c4d4" stroke-width="1">
+          <line x1="120" y1="150" x2="135" y2="135"/><line x1="160" y1="150" x2="185" y2="125"/>
+          <line x1="200" y1="150" x2="228" y2="122"/>
+        </g>
+        <g transform="translate(150,108) rotate(-37)">
+          <rect x="-22" y="-30" width="44" height="30" fill="#cfe0f5" stroke="#2e5fa3" stroke-width="2"/>
+        </g>
+        <text x="40" y="146" font-size="11">θ=37°</text>
+        <path d="M70,150 A40,40 0 0 1 62,128" fill="none" stroke="#c0392b" stroke-width="1.4"/>
+        <!-- componente -->
+        <line x1="150" y1="95" x2="178" y2="130" stroke="#c0392b" stroke-width="2.5"/>
+        <polygon points="178,130 166,126 172,118" fill="#c0392b"/>
+        <text x="180" y="120" font-size="10" fill="#c0392b" font-weight="700">g·senθ</text>
+      </svg>
+    </div>
+    <div class="sol">
+      <div class="paso">Sobre el plano: m·g·senθ = m·a → a = g·senθ</div>
+      <div class="form">a = 10 × sen37° = 10 × 0,6</div>
+      <div class="res">a = 6 m/s²</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Práctica 3 — Dinámica Lineal · Resuelto con la 2ª Ley de Newton (ΣF = m·a) · g = 10 m/s²
+</footer>
+
+</div>
+</body>
+</html>
